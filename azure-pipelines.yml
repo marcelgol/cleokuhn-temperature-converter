@@ -43,5 +43,5 @@ steps:
     containerRegistry: 'marcelgol.azurecr.io'
     repository: 'temparature-converter'
     command: 'buildAndPush'
-    Dockerfile: '**/Temperature.Converter.API'
+    Dockerfile: '**/Dockerfile'
     buildContext: '$(build.artifactstagingdirectory)/out'
