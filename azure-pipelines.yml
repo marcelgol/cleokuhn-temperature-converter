@@ -14,6 +14,7 @@ variables:
 
 steps:
 - task: DotNetCoreCLI@2
+  displayName: 'Restore Packages'
   inputs:
     command: 'restore'
     projects: '**/*.sln'
@@ -23,14 +24,17 @@ steps:
   displayName: 'dotnet build $(buildConfiguration)'
 
 - task: DotNetCoreCLI@2
+  displayName: 'Unit Tests'
   inputs:
     command: 'test'
     projects: '**/Temperature.Converter.Tests'
 
 - task: DotNetCoreCLI@2
+  displayName: 'Publish'
   inputs:
     command: 'publish'
     publishWebProjects: true
     arguments: '-o ./out'
     zipAfterPublish: false
     modifyOutputPath: false
+
