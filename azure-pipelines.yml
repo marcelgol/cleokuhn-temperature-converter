@@ -34,7 +34,14 @@ steps:
   inputs:
     command: 'publish'
     publishWebProjects: true
-    arguments: '-o ./out'
+    arguments: '-o $(build.artifactstagingdirectory)/out'
     zipAfterPublish: false
     modifyOutputPath: false
 
+- task: Docker@2
+  inputs:
+    containerRegistry: 'marcelgol.azurecr.io'
+    repository: 'temparature-converter'
+    command: 'buildAndPush'
+    Dockerfile: '**/Temperature.Converter.API'
+    buildContext: '$(build.artifactstagingdirectory)/out'
