@@ -13,6 +13,16 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
+
+- task: SonarCloudPrepare@1
+  displayName: 'Sonar Scan Prep'
+  inputs:
+    SonarCloud: 'SonarCloud'
+    organization: 'marcelgol'
+    scannerMode: 'MSBuild'
+    projectKey: 'Temperature.Converter'
+    projectName: 'Temperature.Converter'
+
 - task: DotNetCoreCLI@2
   displayName: 'Restore Packages'
   inputs:
@@ -28,6 +38,14 @@ steps:
   inputs:
     command: 'test'
     projects: '**/Temperature.Converter.Tests'
+
+- task: SonarCloudAnalyze@1
+  displayName: Running Sonar Scan
+
+- task: SonarCloudPublish@1
+  displayName: Publishing Sonar Results
+  inputs:
+    pollingTimeoutSec: '300'
 
 - task: DotNetCoreCLI@2
   displayName: 'Publish'
